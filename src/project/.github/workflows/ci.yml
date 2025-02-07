@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  continuous-integration:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install and set up just
+        uses: extractions/setup-just@v2
+
+      - name: Install and set up rye
+        uses: eifinger/setup-rye@v4
+        with:
+          enable-cache: true
+
+      - name : Install dependencies
+        run: rye sync
+
+      - name: Install mypy types
+        run: rye run mypy --install-types
+
+      - name: Run CI tests
+        run: just ci

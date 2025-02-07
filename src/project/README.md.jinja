@@ -1,0 +1,27 @@
+# {{ project_name }}
+
+[![Rye](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/rye/main/artwork/badge.json)](https://rye.astral.sh)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![pre-commit enabled](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://{{ repository_namespace }}.{{ repository_provider[:-4] }}.io/{{ repository_name }}/)
+{% if repository_provider == "github.com" -%}
+![GitHub CI](https://github.com/{{ repository_namespace }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg)
+{% endif -%}
+[![pypi version](https://img.shields.io/pypi/v/tempper.svg)](https://pypi.org/project/{{ repository_name }}/)
+
+
+{{ project_description }}
+
+## Installation
+
+With `pip`:
+
+```bash
+pip install {{ python_package_distribution_name }}
+```
+
+With [`rye`](https://rye.astral.sh/):
+
+```bash
+rye add {{ python_package_distribution_name }}
+```
