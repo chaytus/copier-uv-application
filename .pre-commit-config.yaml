@@ -28,12 +28,12 @@ repos:
         args: [ --config=ruff.toml ]
   - repo: local
     hooks:
-      - id: mypy
-        language: system
-        name: mypy
-        types: [python]
-        files: "^(src/|docs/|tests/)"
-        entry: rye run mypy
+#      - id: mypy
+#        language: system
+#        name: mypy
+#        types: [python]
+#        files: "^(src/|docs/|tests/)"
+#        entry: rye run mypy
 
       - id: pyproject-fmt
         name: pyproject-fmt

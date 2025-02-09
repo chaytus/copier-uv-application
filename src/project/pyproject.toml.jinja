@@ -104,7 +104,7 @@ Repository = "https://{{ repository_provider }}/{{ repository_namespace }}/{{ re
 Issues = "https://{{ repository_provider }}/{{ repository_namespace }}/{{ repository_name }}/issues"
 Discussions = "https://{{ repository_provider }}/{{ repository_namespace }}/{{ repository_name }}/discussions"
 
-[dev-dependencies]
+[dependency-groups]
 dev = [
     "commitizen>=3.20.0",
     "deptry>=0.14.2",
@@ -158,10 +158,9 @@ module = [
 ignore_errors = true
 
 [tool.pyright]
-exclude = [ ".venv" ]
+exclude = [ ".venv", "src/{{ python_package_import_name }}/ui/main.py" ]
 venvPath = "."
 venv = ".venv"
-exclude = [ "src/{{ python_package_import_name }}/ui/main.py" ]
 pythonVersion = "{{ ensure_python_version }}"
 
 [tool.commitizen]

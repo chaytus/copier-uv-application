@@ -1,6 +1,6 @@
 [project]
 name = "copier-uv-application"
-version = "0.0.0"
+version = "0.1.0"
 description = "A Copier template that uses uv"
 readme = "README.md"
 license = { text = "MIT" }

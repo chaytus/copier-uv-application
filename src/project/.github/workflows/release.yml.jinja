@@ -15,7 +15,7 @@ on:
 
 jobs:
   windows:
-    runs-on: ${{ matrix.platform.runner }}
+    runs-on: ${% raw %}{{ matrix.platform.runner }}{% endraw %}
     strategy:
       matrix:
         platform:
@@ -41,17 +41,17 @@ jobs:
         run: uv run python scripts/pyinstaller.py -a
 
       - name: Create zip
-        run: 7z a {{ project_name }}_${{ matrix.platform.target }}.zip .\dist\{{ project_name }}.exe
+        run: 7z a {{ project_name }}_${% raw %}{{ matrix.platform.target }}{% endraw %}.zip .\dist\{{ project_name }}.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: {{ project_name }}_${{ matrix.platform.target }}._Windows
-          path: {{ project_name }}_${{ matrix.platform.target }}.zip
+          name: {{ project_name }}_${% raw %}{{ matrix.platform.target }}{% endraw %}._Windows
+          path: {{ project_name }}_${% raw %}{{ matrix.platform.target }}{% endraw %}.zip
           retention-days: 1
 
   macos:
-    runs-on: ${{ matrix.platform.runner }}
+    runs-on: ${% raw %}{{ matrix.platform.runner }}{% endraw %}
     strategy:
       matrix:
         platform:
@@ -72,9 +72,9 @@ jobs:
 
       - name: macOS-Install the Apple signing certificate
         env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          BUILD_CERTIFICATE_BASE64: ${% raw %}{{ secrets.BUILD_CERTIFICATE_BASE64 }}{% endraw %}
+          P12_PASSWORD: ${% raw %}{{ secrets.P12_PASSWORD }}{% endraw %}
+          KEYCHAIN_PASSWORD: ${% raw %}{{ secrets.KEYCHAIN_PASSWORD }}{% endraw %}
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
@@ -94,8 +94,8 @@ jobs:
 
       - name: Make spec file
         env:
-          OSX_BUNDLE_IDENTIFIER: ${{ secrets.OSX_BUNDLE_IDENTIFIER }}
-          OSX_CODESIGN_IDENTITY: ${{ secrets.OSX_CODESIGN_IDENTITY }}
+          OSX_BUNDLE_IDENTIFIER: ${% raw %}{{ secrets.OSX_BUNDLE_IDENTIFIER }}{% endraw %}
+          OSX_CODESIGN_IDENTITY: ${% raw %}{{ secrets.OSX_CODESIGN_IDENTITY }}{% endraw %}
         run: |
           TAG=$(uv run cz version -p)
           uv run python scripts/pyinstaller.py -s -v $TAG
@@ -105,9 +105,9 @@ jobs:
 
       - name: macOS-Notarize and Staple app
         env:
-          NOTARIZATION_USERNAME: ${{ secrets.NOTARIZATION_USERNAME }}
-          NOTARIZATION_TEAM_ID: ${{ secrets.NOTARIZATION_TEAM_ID }}
-          NOTARIZATION_PASSWORD: ${{ secrets.NOTARIZATION_PASSWORD }}
+          NOTARIZATION_USERNAME: ${% raw %}{{ secrets.NOTARIZATION_USERNAME }}{% endraw %}
+          NOTARIZATION_TEAM_ID: ${% raw %}{{ secrets.NOTARIZATION_TEAM_ID }}{% endraw %}
+          NOTARIZATION_PASSWORD: ${% raw %}{{ secrets.NOTARIZATION_PASSWORD }}{% endraw %}
         run: |
           # Store the notarization credentials so that we can prevent a UI password dialog
           # from blocking the CI
@@ -136,13 +136,13 @@ jobs:
           xcrun stapler staple "dist/{{ project_name }}.app"
 
       - name: macOS-Create dmg
-        run: uv run python scripts/pyinstaller.py -d -p ${{ matrix.platform.target }}
+        run: uv run python scripts/pyinstaller.py -d -p ${% raw %}{{ matrix.platform.target }}{% endraw %}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: {{ project_name }}_${{ matrix.platform.target }}
-          path: {{ project_name }}_${{ matrix.platform.target }}.dmg
+          name: {{ project_name }}_${% raw %}{{ matrix.platform.target }}{% endraw %}
+          path: {{ project_name }}_${% raw %}{{ matrix.platform.target }}{% endraw %}.dmg
           retention-days: 1
 
   generate-changelog:
@@ -150,7 +150,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      tag: ${{ steps.generate-changelog.outputs.tag }}
+      tag: ${% raw %}{{ steps.generate-changelog.outputs.tag }}{% endraw %}
 
     steps:
       - uses: actions/checkout@v4
@@ -198,9 +198,9 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }}
-          repository: ${{ secrets.PUB_OWNER }}/${{ secrets.PUB_REPO }}
-          token: ${{ secrets.APPLICATION_RELEASE_TOKEN }}
+          tag_name: ${% raw %}{{ github.ref }}{% endraw %}
+          repository: ${% raw %}{{ secrets.PUB_OWNER }}{% endraw $}/${% raw %}{{ secrets.PUB_REPO }}{% endraw %}
+          token: ${% raw %}{{ secrets.APPLICATION_RELEASE_TOKEN }}{% endraw %}
           name: {{ project_name }} Release
           draft: false
           prerelease: false

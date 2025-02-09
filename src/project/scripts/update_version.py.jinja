@@ -73,7 +73,7 @@ def add_dmg(name: str, version: str = "0.0.0") -> None:
 @click.option("-d", "--dmg", is_flag=True, help="Update the version number in the dmg title")
 def main(plist: bool = False, spec: bool = False, add: bool = False, dmg: bool = False):
     """Update the version number in pyinstaller spec file and Info.plist file."""
-    app_name = "{{ project.name }}"
+    app_name = "{{ project_name }}"
     if plist is True:
         update_plist(app_name)
     elif spec is True:

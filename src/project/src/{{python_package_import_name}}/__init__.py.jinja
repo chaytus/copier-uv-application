@@ -2,11 +2,13 @@
 
 {{ project_description }}
 """
+import sys
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from PySide6.QtWidgets import QMainWindow, QWidget
 
+from .configs import APP_NAME, APP_VERSION
 from .ui.main import Ui_MainWindow
 
 if TYPE_CHECKING:
@@ -21,7 +23,7 @@ class {{ project_name }}(QMainWindow, Ui_MainWindow):
         if sys.platform.startswith("win"):
             self._adjust_ui_for_windows()
 
-     def _adjust_ui_for_windows(self) -> None:
+    def _adjust_ui_for_windows(self) -> None:
         """Adjust the UI for Windows.
 
         Hardcoded font size adjustments for Windows. Original program was
