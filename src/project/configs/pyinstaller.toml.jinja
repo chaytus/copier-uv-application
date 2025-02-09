@@ -1,0 +1,41 @@
+[project]
+name = "{{ project_name }}"
+macos_icon = "src/{{ python_project_import_name }}/icons/{{ project_name }}.icns"
+windows_icon = "src/{{ python_project_import_name }}/icons/{{ project_name }}.ico"
+entry_point = "src/app.py"
+
+[arguments]
+base = [
+	"--noconsole",
+]
+
+data = [
+	"--add-data=src/{{ python_project_import_name }}/icons/{{ project_name }}.icns:icons",
+	"--add-data=src/{{ python_project_import_name }}/icons/{{ project_name }}.ico:icons",
+]
+
+exclude = [
+    "--exclude-module=FixTk",
+    "--exclude-module=tcl",
+    "--exclude-module=tk",
+    "--exclude-module=_tkinter",
+    "--exclude-module=tkinter",
+    "--exclude-module=Tkinter",
+    "--exclude-module=PyQt5",
+    "--exclude-module=PySide2",
+    "--exclude-module=shiboken2",
+    "--exclude-module=Tkinter",
+]
+
+#hidden = [
+#	"--hidden-import=default",
+#]
+
+macos = [
+	"--onedir",
+	"--osx-entitlements-file=entitlements.plist",
+]
+
+windows = [
+	"--onefile",
+]

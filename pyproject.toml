@@ -1,58 +1,44 @@
 [project]
-name = "copier-rye-package"
-version = "0.2.0"
-description = "A Copier template that uses Rye"
+name = "copier-uv-application"
+version = "0.0.0"
+description = "A Copier template that uses uv"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-    { name = "chaytus", email = "dev@chaytus.com" }
+  { name = "chaytus", email = "dev@chaytus.com" },
 ]
-requires-python = "~= 3.10"
+requires-python = "~=3.10"
 classifiers = [
+  "Private :: Do Not Upload",
   "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
 ]
 
-[build-system]
-build-backend = "hatchling.build"
-requires = [
-  "hatchling",
+[dependency-groups]
+dev = [
+  "blacken-docs>=1.16",
+  "commitizen>=3.20",
+  "deptry>=0.14.2",
+  "jinja2>=3.1.3",
+  "mkdocs-macros-plugin>=1.0.5",
+  "mkdocs-material[imaging]>=9.5.14",
+  "mkdocstrings>=0.24.1",
+  "mkdocstrings-python>=1.9",
+  "mypy>=1.9",
+  "pip-audit>=2.7.2",
+  "pre-commit>=4.1",
+  "pyproject-fmt>=1.7",
+  "pytest>=8.1.1",
+  "pytest-cov>=4.1",
+  "ruff>=0.3.4",
+  "validate-pyproject>=0.16",
 ]
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/copier_rye_package"]
-
-[tool.rye]
-managed = true
-virtual = true
-dev-dependencies = [
-    "jinja2>=3.1.3",
-    "pytest>=8.1.1",
-    "deptry>=0.14.2",
-    "mypy>=1.9.0",
-    "validate-pyproject>=0.16",
-    "pyproject-fmt>=1.7.0",
-    "pre-commit>=4.1.0",
-    "commitizen>=3.20.0",
-    "mkdocstrings>=0.24.1",
-    "mkdocstrings-python>=1.9.0",
-    "mkdocs-macros-plugin>=1.0.5",
-    "mkdocs-material[imaging]>=9.5.14",
-    "pytest-cov>=4.1.0",
-    "blacken-docs>=1.16.0",
-    "ruff>=0.3.4",
-    "pip-audit>=2.7.2",
-]
-
-[tool.rye.scripts]
-pyproject = "pyproject-fmt pyproject.toml"
 
 [tool.commitizen]
 name = "cz_conventional_commits"

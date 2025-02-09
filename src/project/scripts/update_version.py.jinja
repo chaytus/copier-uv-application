@@ -1,0 +1,88 @@
+"""Update the version number in pyinstaller spec file and Info.plist file."""
+
+import os
+import re
+from os import rename
+from pathlib import Path
+from shutil import move
+
+import click
+
+
+def update_plist(name: str, version: str = "0.0.0") -> None:
+    """Update the version number in the Info.plist file."""
+    plist_lines: list[str]
+    tmp_pth = "tmp.plist"
+    plist_pth = f"dist/{name}.app/Contents/Info.plist"
+
+    with open(plist_pth) as plist:
+        plist_lines = plist.readlines()
+
+    with open(tmp_pth, "w") as tmp:
+        prev_line = ""
+        for line in plist_lines:
+            if "CFBundleShortVersionString" in prev_line:
+                tmp.write(line.replace("0.0.0", version))
+            else:
+                tmp.write(line)
+
+            prev_line = line
+
+    move(tmp_pth, plist_pth)
+
+
+def update_spec(name: str, version: str = "0.0.0") -> None:
+    """Update the version number in the $(app).spec file."""
+    buf: str
+    wd = Path.cwd()
+    with open(Path(wd, f"{name}.spec")) as fle:
+        buf = fle.read()
+
+    with open(f"{name}.spec", "w") as fle:
+        fle.write(re.sub(r"version='\d+.\d+.\d+'", f"version='{version}'", buf))
+
+
+class AddVersionError(Exception):
+    """Exception raised when the $(app).spec file doesn't exist."""
+
+
+def add_version(name: str) -> None:
+    """Add the version number to the $(app).spec file."""
+    buf: str
+    tail = "    version='0.0.0',\n)"
+    if not os.path.exists(f"{name}.spec"):
+        raise AddVersionError(f"!!!{name}.spec file doesn't exists, aborting...")
+    with open(f"{name}.spec") as fle:
+        buf = fle.read()
+
+    with open(f"{name}.spec", "w") as fle:
+        fle.write(buf[:-2] + tail)
+
+
+def add_dmg(name: str, version: str = "0.0.0") -> None:
+    """Add the version number in the dmg file name."""
+    dmg_pth = f"release/{name}.dmg"
+    new_pth = f"release/{name}_{version}.dmg"
+    rename(dmg_pth, new_pth)
+
+
+@click.command()
+@click.option("-p", "--plist", is_flag=True, help="Update the version number in Info.plist")
+@click.option("-s", "--spec", is_flag=True, help="Update the version number in spec file")
+@click.option("-a", "--add", is_flag=True, help="Add version option to spec file")
+@click.option("-d", "--dmg", is_flag=True, help="Update the version number in the dmg title")
+def main(plist: bool = False, spec: bool = False, add: bool = False, dmg: bool = False):
+    """Update the version number in pyinstaller spec file and Info.plist file."""
+    app_name = "{{ project.name }}"
+    if plist is True:
+        update_plist(app_name)
+    elif spec is True:
+        update_spec(app_name)
+    elif add is True:
+        add_version(app_name)
+    elif dmg is True:
+        add_dmg(app_name)
+
+
+if __name__ == "__main__":
+    main()

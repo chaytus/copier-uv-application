@@ -10,12 +10,11 @@ on:
 
 jobs:
   continuous-integration:
+    runs-on: ${{ matrix.platform.runner }}
     strategy:
       matrix:
-        os:
-          - ubuntu-latest
-
-    runs-on: ${{ matrix.os }}
+        platform:
+          - runner: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -24,16 +23,16 @@ jobs:
       - name: Install and set up just
         uses: extractions/setup-just@v2
 
-      - name: Install and set up rye
-        uses: eifinger/setup-rye@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
 
       - name : Install dependencies
-        run: rye sync
+        run: uv sync
 
       - name: Install mypy types
-        run: rye run mypy --install-types
+        run: uv run mypy --install-types
 
       - name: Run CI tests
         run: just ci

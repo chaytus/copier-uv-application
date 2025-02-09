@@ -1,8 +1,46 @@
-"""{{ project_name }} package.
+"""{{ project_name }} Application.
 
 {{ project_description }}
 """
+from pathlib import Path
+from typing import TYPE_CHECKING
 
-from __future__ import annotations
+from PySide6.QtWidgets import QMainWindow, QWidget
 
-__all__: list[str] = []
+from .ui.main import Ui_MainWindow
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+class {{ project_name }}(QMainWindow, Ui_MainWindow):
+    """The main application window."""
+
+    def __init__(self, icon_path: Path, parent: QWidget | None = None):
+        super().__init__(parent=parent)
+        self.setupUi(self)
+        if sys.platform.startswith("win"):
+            self._adjust_ui_for_windows()
+
+     def _adjust_ui_for_windows(self) -> None:
+        """Adjust the UI for Windows.
+
+        Hardcoded font size adjustments for Windows. Original program was
+        designed in and for macOS exclusively. This method is a quick fix to
+        shrink the hardcoded font sizes to fit in thw Windows environment.
+        """
+        _widgets: Iterable[QWidget] = self.findChildren(QWidget)
+        for widget in _widgets:
+            font = widget.font()
+            if font.pointSize() == 10:
+                continue
+            _size = int(font.pointSize() * 0.75)
+            font.setPointSize(1 if _size < 1 else _size)
+            widget.setFont(font)
+
+        # Need to adjust the vertical size of the window just slightly
+        self._y_size += 10
+
+    def init_ui(self, icon_path: Path) -> None:
+        """Initialize the UI."""
+        # set the window name
+        self.setWindowTitle(APP_NAME + " v" + APP_VERSION)

@@ -23,9 +23,11 @@ repos:
       - id: ruff
         types_or: [ python, pyi, toml ]
         args: [ --fix, --exit-non-zero-on-fix, --show-fixes, --config=ruff.toml ]
+        exclude: ^ui/
       - id: ruff-format
         types_or: [ python, pyi, toml ]
         args: [ --config=ruff.toml ]
+        exclude: ^ui/
   - repo: local
     hooks:
       - id: mypy

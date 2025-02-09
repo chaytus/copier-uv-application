@@ -69,13 +69,25 @@ pre-commit:
 
 alias c := commit
 
+# Upate the ui file
+update-ui:
+    rye run ui
+
+# Run the app
+app:
+  rye run python src/app.py
+
+# Asseble the app
+assemble:
+  rye run assemble
+
 # Release a new version
 release: fmt audit lint typecheck bump
   git push
   git push --tag
 
 # Run all CI checks
-ci: fmt lint typecheck audit check-bump
+ci: fmt lint typecheck audit
 
 # Run all tests
 test:

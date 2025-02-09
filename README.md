@@ -1,18 +1,18 @@
 <div align="center">
 
-[![rye-managed](https://img.shields.io/badge/rye-managed-green)](https://rye-up.com)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![pre-commit enabled](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![documentation mkdocs](https://img.shields.io/badge/documentation-mkdocs%20material-0094F5)](https://www.mkdocs.org/)
 
 </div>
 
-`copier-rye-packagee` is a [Copier](https://copier.readthedocs.io/en/stable/) template ideated to speed up the development process of Python applications. No more configuration hassle and boilerplate!
+`copier-uv-packagee` is a [Copier](https://copier.readthedocs.io/en/stable/) template ideated to speed up the development process of Python applications. No more configuration hassle and boilerplate!
 
 ## ⚡ Features
 
-`copier-rye-package` offers a production-ready development environment, with many useful features like formatting, linting, pre-commit hooks, and documentation already set up. Here's an overview of the features:
+`copier-uv-application` offers a production-ready development environment, with many useful features like formatting, linting, pre-commit hooks, and documentation already set up. Here's an overview of the features:
 
-- [`rye`](https://rye-up.com) is a comprehensive project and package management solution for Python.
+- [`uv`](https://docs.astral.sh/uv/) is a comprehensive project and package management solution for Python.
 - [`just`](https://github.com/casey/just/) is a modern rewrite of `make` in Rust 🦀
 - [`pre-commit`](https://github.com/pre-commit/pre-commit) validates your commits.
 - [`ruff`](https://github.com/charliermarsh/ruff) provides static code analysis and a code and import formatting using [`black`](https://github.com/psf/black) and [`isort`](https://github.com/PyCQA/isort) styles.
@@ -44,30 +44,14 @@
 
 ## 🛠️ How to
 
-Install [`rye`](https://pdm.fming.dev/latest/#installation) and [`just`](https://github.com/casey/just#installation):
+Install [`uv`](https://docs.astral.sh/uv/) and [`just`](https://github.com/casey/just#installation):
 
 ```bash
-curl -sSf https://rye-up.com/get | bash # For Linux/ Mac Users
+# For Linux/ Mac Users
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # for example, on macOS
 brew install just
-```
-
-### Optional: Install uv
-For blazingly fast dependency install you can set `rye` to use `uv` under the hood when retrieving dependencies:
-First of all, install `uv`.
-```bash
-pipx install uv
-```
-
-> **Warning**
->
-> 🔎 Why `pipx`?
-> `pip install --user` is not recommended, as it does not ensure dependency isolation. For this purpose, the [Python Packaging Authority (PyPA)](https://www.pypa.io/en/latest/) advises to use [`pipx`](https://pypa.github.io/pipx/). `pipx` installs and runs python CLIs in isolated environments. To install it, follow the instructions [here](https://pypa.github.io/pipx/#install-pipx).
-
-Then, configure `rye` to use uv:
-```bash
-rye config --set-bool behavior.use-uv=true
 ```
 
 ### Create a New Project
@@ -77,7 +61,7 @@ If you want to create a new package, or any coding project, you just have to run
 1. Initialise the template:
 
 ```bash
-copier copy --trust gh:chaytus/copier-rye-package my-project
+copier copy --trust gh:chaytus/copier-uv-application my-project
 ```
 
 
@@ -87,7 +71,7 @@ copier copy --trust gh:chaytus/copier-rye-package my-project
 just init
 ```
 
-For this command to execute successfully, you need to have [`rye`](https://rye-up.com/) and the [Git](https://git-scm.com/) installed.
+For this command to execute successfully, you need to have [`uc`](https://docs.astral.sh/uv/) and the [Git](https://git-scm.com/) installed.
 
 If you do not want to configure CI/CD on GitHub, you can simply run the following:
 
@@ -116,7 +100,7 @@ Or even the shorter `just c`. A prompt will guide you through the commit.
   "author_fullname": "",
   "author_email": "",
   "author_username": "",
-  "author_oraganization": "",
+  "author_organization": "",
   "repository_provider": "",
   "repository_namespace": "",
   "repository_name": "",
@@ -134,7 +118,7 @@ Or even the shorter `just c`. A prompt will guide you through the commit.
 - `project_description`: the description of the project indicated in `pyproject.toml`.
 - `author_fullname`: the author full name.
 - `author_email`: the author email address.
-- `author_oraganization`: the author organization.
+- `author_organization`: the author organization.
 - `repository_provider`: the repository provider (e.g., *GitHub*, *GitLab*, *BitBucket*). Only GitHub is supported for now.
 - `repository_namespace`: the repository namespace.
 - `package_name`: the package name.
@@ -149,16 +133,16 @@ PR and issues are always accepted, especially since this project is far from bei
 
 ### Development
 
-1. Install `rye` and `just`.
+1. Install `uv` and `just`.
 
 2. Clone the repository:
 
 ```bash
 # using github cli
-gh repo clone chaytus/copier-rye-package
+gh repo clone chaytus/copier-uv-application
 
 # using git (SSH recommended)
-git clone git@github.com:chaytus/copier-rye-packagee
+git clone git@github.com:chaytus/copier-uv-application
 ```
 
 3. Install the dependencies:
@@ -177,7 +161,7 @@ just pre-release
 
 The following operations will be performed:
 
-1. Format with `black` and `isort`.
+1. Format with `ruff`.
 2. Lint with `ruff`.
 3. Run type checks with `mypy`.
 4. Audit dependencies with `pip-audit`.
@@ -187,13 +171,6 @@ The following operations will be performed:
 
 ## 📚 Credits
 
-This template is heavly inspired by [@baggiponte](https://github.com/baggiponte) [Chef](https://github.com/baggiponte/chef/tree/main) (based on Cookiecutter) and [@pawamoy](https://github.com/pawamoy) [copier-uv](https://github.com/pawamoy/copier-uv) (based on Copier). They use respectively `pdm` and `uv` as packaging solution. Both are very well done and works great, and so...
-
-### Why bother creating (yet another) template?
-
-As of today, it seems that there are no **Copier** templates that uses `rye`, given the novelty of the project.
-Furthermore, sometimes a feature is not implemented in any available template or you need a custom one.
-
-Personally, I believe that leveraging templating to abstract on stuff like *dependency manager*, is a possible solution: give the user many choices and let him decide which one suits him best.
+This template is heavily inspired by [@montanarograziano](https://github.com/montanarograziano/), [@baggiponte](https://github.com/baggiponte) [Chef](https://github.com/baggiponte/chef/tree/main) (based on Cookiecutter) and [@pawamoy](https://github.com/pawamoy) [copier-uv](https://github.com/pawamoy/copier-uv) (based on Copier). They use respectively `pdm` and `uv` as packaging solution. Both are very well done and works great, and so...
 
 Feel free to contact to discuss more about this topic!
