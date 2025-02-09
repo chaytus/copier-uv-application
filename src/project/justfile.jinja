@@ -13,7 +13,6 @@ set positional-arguments
 @install:
   #!/bin/bash
   set -euxo pipefail
-  {{just_executable()}} needs uv
   echo "Installing dependencies..."
   uv sync
 

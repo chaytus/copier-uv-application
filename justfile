@@ -12,7 +12,6 @@ set positional-arguments
 @install:
   #!/bin/bash
   set -euxo pipefail
-  {{just_executable()}} needs rye
   echo "Installing dependencies..."
   rye sync
 
